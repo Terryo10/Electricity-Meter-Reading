@@ -11,8 +11,6 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -28,11 +26,6 @@ class EditorPanelProvider extends PanelProvider
             ->id('editor')
             ->path('editor')
             ->profile()
-            ->userMenuItems([
-                'logout' => \Filament\Navigation\MenuItem::make()
-                    ->label('Log out')
-                    ->url('/admin/login'),
-            ])
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -43,8 +36,9 @@ class EditorPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Editor/Widgets'), for: 'App\Filament\Editor\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                \App\Filament\Editor\Widgets\EditorOverviewWidget::class,
+                \App\Filament\Editor\Widgets\DeviceManagementWidget::class,
+                \App\Filament\Editor\Widgets\EditorQuickActionsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
